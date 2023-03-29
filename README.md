@@ -49,7 +49,11 @@ const { todoList } = storeToRefs(store);
 </template>
 ```
 
-> [!WARNING] Деструктурированные из стора свойства не будут реактивными, если не применить к ним `storeToRef`
+> <picture>
+>   <source media="(prefers-color-scheme: light)" srcset="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/light-theme/warning.svg">
+>   <img alt="Warning" src="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/dark-theme/warning.svg">
+> </picture><br>
+> Деструктурированные из стора свойства не будут реактивными, если не применить к ним `storeToRef`
 
 ### Изменение состояния
 
@@ -129,7 +133,11 @@ createApp(App)
 2. В каждом файле импортируем `defineStore` из `'pinia'`
 3. Экспортируем константу с именем `useSomethingStore`, которой присваиваем `defineStore("SomethingStore", {объект_стора})`
 
-> [!WARNING] Не забудь, что свойство store — это функция, возвращающая объект. То есть как data в компонентах, а не как во Vuex
+> <picture>
+>   <source media="(prefers-color-scheme: light)" srcset="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/light-theme/warning.svg">
+>   <img alt="Warning" src="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/dark-theme/warning.svg">
+> </picture><br>
+> Не забудь, что свойство store — это функция, возвращающая объект. То есть как data в компонентах, а не как во Vuex
 
 Осталось получить данные в компоненте:
 
@@ -210,7 +218,11 @@ export default {
 }
 ```
 
-> [!WARNING] Не забудь заменить $store.dispatch(action) в вёрстке и других местах
+> <picture>
+>   <source media="(prefers-color-scheme: light)" srcset="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/light-theme/warning.svg">
+>   <img alt="Warning" src="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/dark-theme/warning.svg">
+> </picture><br>
+> Не забудь заменить $store.dispatch(action) в вёрстке и других местах
 
 ### Практическая работа
 
@@ -267,18 +279,26 @@ export const useGeoLocationStore = defineStore('geolocation', () => {
 
 ```
 
-> [!INFO] Ключевые моменты:
+> <picture>
+>   <source media="(prefers-color-scheme: light)" srcset="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/light-theme/info.svg">
+>   <img alt="Info" src="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/dark-theme/info.svg">
+> </picture><br>
+> Ключевые моменты:
 > 1. Options-сторы используют this для доступа к свойствам (или аргумент state в геттерах)
 > 2. Setup-сторы могут обращаться к свойствам напрямую
 
 
 ### Модульность
 
-> [!INFO] Вот ключевые принципы, по которым стоит выделять отдельные модули:
-> 1. Данные в одном сторе связаны логически
-> 2. Также они могут быть связаны по фичам приложения
-> 3. Несколько сторов могут использовать один и тот же API/библиотеку. Это неважно
-> 4. Если нужно заимствовать данные из одного стора в другом, используй nested stores
+> <picture>
+>   <source media="(prefers-color-scheme: light)" srcset="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/light-theme/info.svg">
+>   <img alt="Info" src="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/dark-theme/info.svg">
+> </picture><br>
+> Вот ключевые принципы, по которым стоит выделять отдельные модули:<br />
+> 1. Данные в одном сторе связаны логически<br />
+> 2. Также они могут быть связаны по фичам приложения<br />
+> 3. Несколько сторов могут использовать один и тот же API/библиотеку. Это неважно<br />
+> 4. Если нужно заимствовать данные из одного стора в другом, используй nested stores<br />
 
 Если функциональность одного стора полагается на данные из другого стора, их можно использовать друг в друге. Эта техника называет Nested Stores.
 
@@ -342,7 +362,11 @@ $patch может так
 </button>
 ```
 
-> [!INFO] $reset работает только в Options-сторах, так как под капотом использует state()
+> <picture>
+>   <source media="(prefers-color-scheme: light)" srcset="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/light-theme/info.svg">
+>   <img alt="Info" src="https://github.com/Mqxx/GitHub-Markdown/blob/main/blockquotes/badge/dark-theme/info.svg">
+> </picture><br>
+> $reset работает только в Options-сторах, так как под капотом использует state()
 
 ### $onAction
 
