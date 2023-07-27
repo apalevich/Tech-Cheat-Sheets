@@ -11,7 +11,7 @@ We are going to solve these problems:
 
 State manager patter is when component tree becomes a big "view", and any component can access the state or trigger actions, no matter where they are in the tree. So that **we extract the shared state out of the components, and manage it in a global singleton**
 
-![](media/a176ec3f12a7924c24b9352929ee2221.png)
+![](<media/vuex.png>)
 
 Store — container of the application state. It's **reactive** and changes **only by commiting mutations**.
 
