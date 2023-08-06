@@ -178,7 +178,7 @@ mutations: {
 },
 ```
 
-> [!warning] Mutation hanlrers always should be synchronous. To handle async operations an one shall use [[#Actions]]
+> [!warning] Mutation hanlrers always should be synchronous. To handle async operations an one shall use [Actions](#Actions)
 
 Type is handler name as a string used to commit a mutation: `store.commit('eraseList')`.
 
