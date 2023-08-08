@@ -117,6 +117,8 @@ readline.question('Who are you?', (answer) => {
 
 Существуют альтеративные пакеты для обработки ввода, которые позволяют скрывать пароль, делать чекбоксы и много другое. Например, `Inquirer.js`.
 
+## http
+
 # Импорты и экспорты
 
 По умолчанию объекты и переменные приватны, но их можно сделать доступными для импорта в другие файлы двумя способами:
@@ -356,6 +358,38 @@ const checkStatus = async () => {
 |---|---|
 | `const getFirstUserData = () => {return fetch('./users.json').then(response => response.json).then(users => users[0]).then(user => fetch('/users/'+user.name).then(userResponse => userResponse.json())}` | `const getFirstUserData = async () => {const response = await fetch('/users.json');const users = await response.json();const user = users[0];const userResp = await fetch('/user/'+user.name);const userData = await user.json();resurt userData}`|
 
+# События
+
+События знакомы всем, кто имел с ними опыт, используя JavaScript в браузере. Node имеет стандартный модуль `events`, который позволяет использовать ту же технику, создавая, запуская и реагируя на любые события.
+
+`events` — это класс, который нужно импортировать и создать экземпляр для работы с ним
+
+```js
+// Пример из документации:
+import { EventEmitter } from 'node:events';
+class MyEmitter extends EventEmitter {}
+const myEmitter = new MyEmitter();
+// Пример Flavio Copes
+const eventEmitter = require('events').EventEmitter()
+```
+
+Основные методы события:
+- emit — запускает событие
+- on — устанавливает колбэк события
+
+emit поддерживает произвольное количество аргументов, но первый должен быть названием события. Остальные аргументы становятся аргументами функции-колбека:
+
+```js
+eventEmitter.on('created', (start, end) => {
+	console.log(`started from ${start} to ${end}`)
+})
+
+eventEmitter.emit('created');
+```
+
+События по умолчанию синхронные (выполняются в порядке регистрации), но с помощью setImmediate(), process.nextTick() и других приёмов могут стать асинхронными.
+
+Полный events API в документации: [https://nodejs.org/api/events.html](https://nodejs.org/api/events.html)
 
 # Другие статьи
 [NPM package](NPM%20package.md)
