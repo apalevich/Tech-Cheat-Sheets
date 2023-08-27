@@ -254,3 +254,8 @@ NLP
 # Внешние ссылки
 
 Сайт курса — https://learn.deeplearning.ai/chatgpt-prompt-eng
+
+На дополнение:
+https://nick-senin.github.io/2023/01/16/Эксперт-по-продуктивности-делает-с-ChatGPT-всякое.-Ошибки-и-ограничения.html
+https://nick-senin.github.io/2023/01/21/Эксперт-по-продуктивности-делает-с-ChatGPT-всякое.-Возможности-и-способы-использования.html
+https://nick-senin.github.io/2023/01/28/Эксперт-по-продуктивности-делает-с-ChatGPT-всякое.-Оптимизации-запросов.html
