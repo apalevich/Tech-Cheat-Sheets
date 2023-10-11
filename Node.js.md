@@ -110,15 +110,52 @@ const readline = require('readline')
 })
 
 readline.question('Who are you?', (answer) => {
-	console.log(`Hi ${answer}!`);
+	console.log(`Hi ${answer}!`)
 	readline.close()
 })
 ```
 
 Существуют альтеративные пакеты для обработки ввода, которые позволяют скрывать пароль, делать чекбоксы и много другое. Например, `Inquirer.js`.
 
-## http
+## `http`
 
+Этот модуль позволяет принимать и обрабатывать веб-запросы и таким образом создавать HTTP-сервер.
+
+```js
+const http = require('http')
+
+const port = 3000
+
+const server = http.createServer()
+
+server.on('request', requestHandler)
+server.on('listening', listeningHandler)
+
+server.listen(port)
+
+function requestHandler(req, res) {
+	res.statusCode = 200
+	res.setHeader('Content-Type', 'application/json')
+	res.end(JSON.stringify({data: 'Hello World!'}))
+}
+
+function listeningHandler() {
+	console.log(`Server running at port ${port}/`)
+}
+```
+
+`http.createServer()` возвращает объект класса `http.Server`
+У `http.Server` есть события, к которым мы привязывает колбэки: `requestHandler` и `listeningHandler` к событиям 'request' и 'listening' соответственно.
+
+`req` и `res` в колбэке — это два объекта, передаваемые в аргументы на каждый запрос: [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage) и [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse) . Мы используем их для обработки тела запроса и задания параметров ответу. Когда мы используем `res.end()`, его аргумент устанавливает тело ответа и ответ отправляется. Этот метод обязательно должен быть установлен для ответа.
+
+Кстати, передать колбэки можно иначе: аргументами в `http.createServer()` и `server.listen()`:
+
+```js
+const server = http.createServer(generalHandler)
+
+server.listen(port, listeningHandler)
+```
 # Импорты и экспорты
 
 По умолчанию объекты и переменные приватны, но их можно сделать доступными для импорта в другие файлы двумя способами:
@@ -393,10 +430,11 @@ eventEmitter.emit('created');
 
 # Сетевые запросы
 
-*Перед началом советую ознакомиться со статьёй [HTTP](HTTP) об основных технических принципах работы Интернета*
+
 
 
 # Другие статьи
+[HTTP](HTTP)
 [NPM package](NPM%20package.md)
 [Axios](Axios.md)
 [WebSockets](WebSockets)
