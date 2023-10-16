@@ -156,6 +156,51 @@ const server = http.createServer(generalHandler)
 
 server.listen(port, listeningHandler)
 ```
+
+Модуль `http` способен и сам выполнять запросы:
+
+```js
+const options = {
+	method: 'GET',
+	hostname: 'example.com',
+	port: 443,
+	path: '/about'
+}
+
+const req = http.request(options, (res) => {
+	console.log(`statusCode: ${res.statusCode}`)
+
+	res.on('data', (d) = > {process.stdout.write(d)})
+})
+
+req.on('error', console.error)
+
+req.end()
+```
+
+POST-запрос выглядит чуть сложнее:
+
+```js
+const payload = JSON.stringify({todo: 'Buy milk'})
+
+const options = {
+	method: 'POST',
+	hostname: 'example.com',
+	port: 443,
+	path: '/todos',
+	headers: {
+		'Content-Type': 'application/json',
+		'Content-Length': data.length
+	}
+}
+...
+req.write(data)
+req.end()
+```
+
+Методы PUT и DELETE выполняются аналогично POST, достаточно изменить метод в объекте `options`.
+
+> [!WARNING] Выполнять запросы таким образом не очень удобно, поэтому обычно используют стороннюю библиотеку [Axios](Axios.md). Если всё же необходимо использовать стандартные модули, импортируй `https` вместо `http` для безопасности
 # Импорты и экспорты
 
 По умолчанию объекты и переменные приватны, но их можно сделать доступными для импорта в другие файлы двумя способами:
