@@ -140,9 +140,9 @@ User Datagram Protocol (UDP) — это протокол, который отп�
 
 *TODO: Добавить ссылку на статью про обработку браузером содержимого ответа  — парсинг, DOM, CSSOM и тд*
 # Другие статьи
-[WebSockets](WebSockets.md)
+[WebSocket API](WebSocket%20API.md)
 
 # Внешние ресурсы
 
 Обзор HTTP на MDN — https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview
-Книга Flavio Copes "Node.js"
+Книга Flavio Copes "Node.js" — https://flaviocopes.com/access/

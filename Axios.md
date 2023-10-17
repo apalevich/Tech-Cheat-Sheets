@@ -6,5 +6,5 @@
 # POST-запросы
 
 # Внешние источники
-Документация — ???
-Книга Flavio Copes "Node.js"
+Документация — https://axios-http.com/docs
+Книга Flavio Copes "Node.js" — https://flaviocopes.com/access/
