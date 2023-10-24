@@ -482,7 +482,7 @@ eventEmitter.emit('created');
 [HTTP](HTTP)
 [NPM package](NPM%20package.md)
 [Axios](Axios.md)
-[WebSocket API](WebSocket%20API.md)
+[WebSocket](WebSocket.md)
 
 # Внешние ресурсы
 Официальный сайт — [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
