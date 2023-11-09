@@ -1,8 +1,16 @@
-- Incrementally adoptable
-- Focused on view layer only
-- Easy to integrate with libraries
-- perfectly capable of poweringsophisticated SPA
-*- documentation*
+---
+tags:
+  - JavaScript
+  - Framework
+---
+
+
+> - Incrementally adoptable
+> - Focused on view layer only
+> - Easy to integrate with libraries
+> - perfectly capable of poweringsophisticated SPA
+> 
+> *— from Vue's documentation*
 
 # Инсталляция
 
@@ -344,3 +352,11 @@ Object.defineProperty(data, 'userId', {
 	}
 })
 ```
+
+
+> [!WARNING] Следующая информация рекомендуется для добавления:
+> - Валидация пропсов https://medium.com/js-dojo/validating-your-vue-props-like-a-pro-5a2d0ed2b2d6
+> - Реактивность во Vue https://habr.com/en/companies/nordclan/articles/706536/
+# Другие статьи по теме
+# Внешние ссылки
+

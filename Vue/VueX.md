@@ -1,3 +1,10 @@
+---
+tags:
+  - JavaScript
+  - StateManager
+---
+
+
 - State manager pattern & library
 - Similar to Redux, Flux, etc. but easier since it's mantained speccialy for Vue
 - Centralised store for all components

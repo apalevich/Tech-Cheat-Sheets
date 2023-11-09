@@ -69,7 +69,7 @@ fetch(BASE_URL, {
 2. Добавь проверенные данные (напр. примеры)
 3. Проверь настройки
 
-Чтобы улучшить навык писать качественные промпты, можно пройти [курс от OpenAI](https://learn.deeplearning.ai/chatgpt-prompt-eng) или посмотреть мой конспект [ChatGPT Prompt Engineering for Developers](<ChatGPT Prompt Engineering for Developers>)
+Чтобы улучшить навык писать качественные промпты, можно пройти [курс от OpenAI](https://learn.deeplearning.ai/chatgpt-prompt-eng) или посмотреть мой конспект [ChatGPT Prompt Engineering for Developers](ChatGPT%20Prompt%20Engineering%20for%20Developers.md Prompt Engineering for Developers>)
 
 # Внешние ресурсы
 Документация — https://platform.openai.com/docs/introduction/overview
