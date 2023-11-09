@@ -472,9 +472,42 @@ eventEmitter.emit('created');
 События по умолчанию синхронные (выполняются в порядке регистрации), но с помощью setImmediate(), process.nextTick() и других приёмов могут стать асинхронными.
 
 Полный events API в документации: [https://nodejs.org/api/events.html](https://nodejs.org/api/events.html)
+# Подключение БД
 
-# Сетевые запросы
+Node.js может работать с различными базами данных. Рассмотрим несколько из них:
+## MySQL
+MySQL — одна из самых популярных и простых в использовании реляционных БД для веб-разработки.
 
+В примерах ниже будем использовать популярный npm-пакет [mysql](https://github.com/mysqljs/mysql):
+```bash
+npm install mysql
+```
+
+Далее с помощью `mysql.createConnection(option)` создаётся объект, через методы которого выполняется управление подключением: `.connect()`, `.query()`, `.end()`.
+
+```js
+const mysql = require('mysql')
+
+const options = {
+	user: 'foo',
+	password: 'bar'
+}
+
+const connection = mysql.createConnection(options)
+
+connection.connect(err => {
+	if (err) console.error(err)
+})
+
+connection.query(
+	'SELECT * FROM `todos` where `id` = ?',
+	givenId,
+	(err, result, fields) => {
+		if (err) console.error(err)
+		
+		handleTodos(result);
+	})
+```
 
 
 
