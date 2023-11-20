@@ -82,6 +82,11 @@ wss.on('connection', ws => {
 В некоторых приложениях (например, групповых чатах) обновление данных на сервере должно уведомлять все подключенные клиенты об изменениях.
 
 Один из способов это сделать — с помощью библиотеки [Socket.io](https://socket.io), который добавляет в интерфейс необходимый метод `emit`.
+
+Другие решения, упрощающие работу с вебсокетами: 
+https://pusher.com/websockets/
+https://ably.com/topic/websockets
+
 # Внешние источники
 MDN — https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API
 Стандарт — https://datatracker.ietf.org/doc/html/rfc6455
