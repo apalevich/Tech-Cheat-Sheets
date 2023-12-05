@@ -1,7 +1,31 @@
-Расширения Google Chrome (далее Хром) — это программы, которые позволяют дополнять опыт работы пользователя в Хроме.
+Расширения (или аддоны) — это программы, которые позволяют изменять или расширять опыт пользователя в браузере.
 
-Расширения используют стандартные веб-технологии: HTML, CSS и JavaScript. Плюс они имеют доступ к стандартным браузерным API ([список](https://developer.mozilla.org/ru/docs/Web/API)) и к специальным Chrome Extensions API ([подробнее](https://developer.chrome.com/docs/extensions/reference/))
+Расширения используют стандартные веб-технологии: HTML, CSS и JavaScript. Они имеют доступ к стандартным браузерным API ([список](https://developer.mozilla.org/ru/docs/Web/API)), а также к специальным API для расширений. Таким образом, расширение позволяет сделать больше, чем обычная веб-страница.
 
+Например:
+- Дополнить информацию на сайте
+- Изменить контент веб-страницы
+- Изменить внешний вид браузера
+- Расширить возможностей браузера
+- Игры
+- Инструменты разработки
+# Совместимость
+
+Хотя сейчас существует 2 стандарта — WebExtensions API и Extensions API для Chromium — на текущий момент браузеры их реализуют с отличиями, поэтому лучше следовать инструкциям из документации конкретного браузера.
+
+|Web browser|Chromium-based?|Extension development webpage|
+|---|---|---|
+|Safari|No|[Safari App Extensions](https://developer.apple.com/documentation/safariservices/safari_app_extensions)|
+|Firefox|No|[Browser Extensions](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions)|
+|Chrome|Yes|[API Reference](https://developer.chrome.com/extensions)|
+|Opera|Yes|[Extensions Documentation](https://dev.opera.com/extensions)|
+|Brave|Yes|Uses [Chrome Web Store](https://chrome.google.com/webstore/category/extensions)|
+|Microsoft Edge|Yes|[Microsoft Edge Add-ons Developer](https://developer.microsoft.com/microsoft-edge/extensions)|
+
+Для облегчения разработки есть несколько инструментов, которые могут собирать расширения для разных браузеров из одних исходников:
+- [webextension-toolbox](https://github.com/webextension-toolbox/webextension-toolbox) — CLI для кросс-браузерной разработки
+
+В этой заметке я постараюсь указывать на различия для разных браузеров.
 # Архитектура расширения
 
 Точное содержание проекта расширения зависит от его функциональности. Но в любом случае его файлы будут относиться к одному из следующих типов:
