@@ -32,6 +32,17 @@ OpenAI API содержит множество моделей, которые д
 Полный список моделей и их идентификаторов: https://platform.openai.com/docs/models
 
 Если не уверены, с какой модели начать, используйте `gpt-3.5-turbo` или `gpt-4`
+## Промпт
+
+Качественный промпт — залог того, что модель ответит наилучшим образом. Вот основной алгоритм:
+
+1. Cоставь запрос
+2. Добавь проверенные данные (напр. примеры)
+3. Проверь настройки
+
+Чтобы улучшить навык писать качественные промпты, можно пройти [курс от OpenAI и DeepLearning](https://learn.deeplearning.ai/chatgpt-prompt-eng) или посмотреть файл [ChatGPT Prompt Engineering for Developers](ChatGPT%20Prompt%20Engineering%20for%20Developers.md Prompt Engineering for Developers>)
+
+> [!NOTE] Самый эффективный способ разработки нужного промпта — итерациями: напиши простой промпт, проверь результат, добавь уточнение, проверь результат, добавь ещё и так далее.
 # Подготовка
 
 ## Настройка аккаунта
@@ -67,16 +78,14 @@ async function main() {
 main();
 ```
 
-# Tools
 
-TODO: Заполнить из https://platform.openai.com/docs/assistants/tools
 # Assistant API
 
 Я начну объяснение с Assistant API. 
 
 Ассистент — это применение моделей GPT, оптимизированных для поддержания разговора на заданную тему. Можно сказать, что это высокоуровневая надстройка над GPT.
 
-Принципиальная особенность Ассистентов: вы имеете более простой интерфейс за счёт меньшего контроля над внутренними процессами модели.
+> [!tip] Принципиальная особенность Ассистентов: вы имеете более простой интерфейс за счёт меньшего контроля над внутренними процессами модели
 
 | Критерий | GPT Модель | Assistant API |
 |----------|------------|---------------|
@@ -175,57 +184,94 @@ const messages = await openai.beta.threads.messages.list(
 ```
 
 В ответ вернётся объект message с массивом data, который содержит историю переписки.
-# Возможности
 
+## Tools
+
+TODO: Заполнить из https://platform.openai.com/docs/assistants/tools
+# Подробнее о возможностях
+
+Разберём, что можно делать с помощью моделей OpenAI
 ## Генерация текста
 
+Генерация текста — общее название, которое позволяет:
 
-## Работа с текстом (на удаление)
+- Создавать черновики документов
+- Писать компьютерный код
+- Отвечать на вопросы по известной теме
+- Проводить анализ текста
+- Давать пользователям ПО возможность общаться обычным языком
+- Тренировать знание по некоторым темам
+- Переводить языки
+- Имитировать персонажа игр
+и многое другое
+## Completion
 
-Называется "Completion" и осуществляется с помощью POST-запросов на Chat API:
-- Text completion (дополняет или генерирует текст) — [docs](https://platform.openai.com/docs/api-reference/completions/create)
-- Chat completion (отвечает на реплики беседы) — [docs](https://platform.openai.com/docs/api-reference/chat/create)
+API, связанный с генерацией текста, называется Completion API. Он поддерживает как сложные разговоры, так и простые задачи без какого-либо разговора.
 
-У запроса есть разные параметры:
-- Количество [токенов](https://platform.openai.com/tokenizer) — единиц обрабатываемого текста. ≈ 4 символам или 0.75 слова 
-- Суффикс для добавления в конец запроса
-- Степень детерминированности (`temperature` или `top_p`) — чем больше, тем больше ответы на одинаковые запросы будут отличаться.
-и другие.
+Completions API может принимать множество параметров, которыми можно настраивать:
+- Выбор модели — указывается в строке `model`, обязателен
+- Контекст беседы — содержится в массиве `messages`, обязателен. В каждом объекте у сообщения есть одна из трёх ролей:
+	1. `system` для задания поведения ассистента
+	2. `assistant` с ответами модели
+	3. `user` c сообщениями пользователя
 
-> [!NOTE] Chat APIs по умолчанию __недетерминированные__, то есть без возможности предсказать выдаваемый ими результат.
+> [!tip] В отличие от Assistant API, Completion и другие API не хранят у себя историю беседы и её надо хранить самостоятельно, передавая в каждом запросе
 
-В теле запроса обязательно указывается текущая модель (`model`) и сообщение (`prompt` или `messages`):
+Необязательные параметры:
+- Оригинальность и креативность ответа — с помощью числовых значений в параметрах `frequency_penalty`, `presence_penalty`, `temperature`, `top_p`,  и прочих
+- Длину ответа — указывается в токенах через свойство `max_tokens`
+- Формат ответа — в объекте `response_format`
+- Стоп-сигналы — для прекращения генерации, что помогает придерживаться заданной темы (свойство `stop`)
+- Постепенное поступление ответа — чтобы имитировать живого собеседника и одновременно сокращать время ожидания ответа, с помощью свойства `stream`
+- Инструменты — в массиве `tools` и строке `tool_choice`
+
+Пример:
 
 ```js
-fetch(BASE_URL, {
-		method: 'POST',
-		headers: {
-			Authorization: `Bearer ${API_KEY}`,
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			model: 'gpt-3.5-turbo',
-			max_tokens: 7,
-			temperature: 0,
-			prompt: 'hello, how are you?', // или
-			messages: [
-				{role: 'user', content: 'hello, how are you?'}
-			]
-		})
-})
+import OpenAI from "openai";
+
+const openai = new OpenAI();
+
+async function main() {
+  const completion = await openai.chat.completions.create({
+    messages: [{"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Who won the world series in 2020?"},
+        {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
+        {"role": "user", "content": "Where was it played?"}],
+    model: "gpt-3.5-turbo",
+  });
+}
+main();
 ```
 
-## Запросы
+Результатом запроса будет объект:
+```json
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The 2020 World Series was played in Texas at Globe Life Field in Arlington.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1677664795,
+  "id": "chatcmpl-7QyqpwdfhqwajicIEznoc6Q47XAyW",
+  "model": "gpt-3.5-turbo-0613",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 17,
+    "prompt_tokens": 57,
+    "total_tokens": 74
+  }
+}
+```
 
-Качественный промпт — залог того, что модель ответит наилучшим образом. Вот основной алгоритм:
+Как видно, ответ модели содержится в свойстве `completion.choices[0].message.content`.
 
-1. Cоставь запрос
-2. Добавь проверенные данные (напр. примеры)
-3. Проверь настройки
-
-Чтобы улучшить навык писать качественные промпты, можно пройти [курс от OpenAI](https://learn.deeplearning.ai/chatgpt-prompt-eng) или посмотреть файл [ChatGPT Prompt Engineering for Developers](ChatGPT%20Prompt%20Engineering%20for%20Developers.md Prompt Engineering for Developers>)
-
-
+Тут есть и другая полезная информация. В частности, `finish_reason` содерижт
 # Внешние ресурсы
 Документация — https://platform.openai.com/docs/introduction/overview
 Курс по Prompt Engineering — https://learn.deeplearning.ai/chatgpt-prompt-eng
