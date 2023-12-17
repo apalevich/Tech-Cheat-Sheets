@@ -67,23 +67,19 @@ UF является следующим шагом в развитии подхо
 </button>
 ```
 
-Примеры модификаторов:
-1. **Псевдоклассы Состояния**
-    Соответствуют псевдоклассам `hover`, `focus`, `active`, `visited`, `focus-within`, `focus-visible`, `first`, `last`, `even`, `odd`, `required`, `invalid`, `disabled`
-3. **Отзывчивые (Responsive) Модификаторы**:
-    
-    - Пример: `md:text-center`. Здесь `md:` является модификатором, который применяет стиль `text-center` только на экранах среднего размера (md) и больше.
-2. 
-3. **Темная Тема (Dark Mode)**:
-    
-    - Пример: `dark:text-white`. Модификатор `dark:` применяет стиль `text-white` когда активна темная тема.
-4. 
-5. **Фокусировка и Активные Состояния**:
-    
-    - Примеры: `focus:ring`, `active:bg-red-500`. Эти модификаторы применяют стили при фокусировке (`focus:`) или активации (`active:`) элемента.
+Модификаторы используются, чтобы таргетировать:
+1. **Состояние**:
+    `hover`, `focus`, `active`, `visited`, `focus-within`, `focus-visible`, `open` (для dialog и details)
+2. **Псевдоселекторы**:
+    `first`, `last`, `even`, `odd`, `required`, `invalid`, `disabled`
+3. **Псевдоэлементы**:
+    `after`, `before`, `placeholder`, `file` (для input[type="file"]), `marker` (для списков), `selection` (для выделенного текста), `first-line` и `first-letter`, `backdrop` (для dialog)
+4. **Медиа запросы**:
+    `md`, `lg` (для размера экранов), `dark` (для цветовой схемы), `supports`, `motion-reduce`,  `contrast-more`, `portrait` и `landscape`
 5. **HTML-Аттрибуты**:
-   `rtl:mr-3` — применяет отступ mr-3 к элементу, когда активен режим Right-To-Left
+   `aria-*` (для `aria-*="true"`), `data`, `rtl`
 
+Дополнительно всегда можно создать [кастомные модификаторы](https://tailwindcss.com/docs/hover-focus-and-other-states#custom-modifiers)
 ### Групповые модификаторы
 
 ГМ активируются когда псевдокласс устанавливается у другого элемента. Они бывают двух типов: группы предка с классом `group` и группы сиблингов с классом `peer`.
@@ -130,6 +126,89 @@ UF является следующим шагом в развитии подхо
 
 Обрати внимание на использование двух групп `group/edit` и `group/item`
 
+## Responsive design
+
+Благодаря модификаторам, в Tailwind каждый класс может быть применён к конкретному брейкпоинту.
+
+В Tailwind есть брейкпоинты по умолчанию:
+
+|Модификатор-префикс|Минимальная ширина|Аналог в классическом CSS|
+|---|---|---|
+|`sm`|640px|`@media (min-width: 640px) { ... }`|
+|`md`|768px|`@media (min-width: 768px) { ... }`|
+|`lg`|1024px|`@media (min-width: 1024px) { ... }`|
+|`xl`|1280px|`@media (min-width: 1280px) { ... }`|
+|`2xl`|1536px|`@media (min-width: 1536px) { ... }`|
+
+Ширина менее 640px используется по умолчанию — это соответствует подходу Mobile-first.
+
+> *Mobile-first — это подход в веб-дизайне, при котором за отправную точку берётся версия для мобильных устройств, а затем расширяется для более крупных экранов.*
+
+Если нужно ограничить диапазон размеров экранов, в которых используется класс, модификаторы размера экрана можно комбинировать:
+
+```html
+<img class="md:flex"> <!--Применяется на md и выше-->
+<img class="md:max-lg:flex"> <!--Применяется от md до xl-->
+```
+
+### Настройка брейкпоинтов
+
+Настройка иных значений брейкпоинтов делается в файле конфигурации tailwind.config.js:
+
+```js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+	theme: {
+		screens: {
+			'tablet': '640px', // аналогично @media (min-width: 640px) { ... }
+			'laptop': '1024px',
+			'desktop': '1280px',
+		},
+	},
+}
+```
+
+## Тёмная тема
+
+### Способ 1 — Автоматический
+Tailwind поддерживает тёмную тему из коробки. Она работает автоматически благодаря свойству `prefers-color-scheme`, через которое ОС передаёт в браузер сайтам системную настройку `light` или `dark`.
+
+Чтобы настроить тёмную тему, достаточно указать модификатор `dark`:
+```html
+<p class="text-slate-500 dark:text-slate-400 text-sm">Lorem Ipsum</p>
+```
+
+### Способ 2 — Вручную
+Чтобы добавить переключение тем вручную, необходимо использовать механику класса на корневом элементе:
+1. Делаем переключатель, который добавляет/убирает CSS-класс темы на html/body
+2. Указываем название класса в файле конфигурации tailwind.config.js:
+```js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+	darkMode: 'class',
+	... 
+}
+```
+
+### Способ 3 — Комбинированный
+Стратегия класса может быть использована для 
+
+С помощью JavaScript и Window.matchMedia() API можно использовать по умолчанию настройку ОС, дав пользователю возможность переключать систему:
+
+```js
+// Считываем настройки ОС при загрузке страницы и сохраняем:
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+	document.documentElement.classList.add('dark')
+} else {
+	document.documentElement.classList.remove('dark')
+}
+
+// Когда пользователь устанавливает тему:
+localStorage.theme = toggler.value
+
+// Когда пользователь устанавливает соответствовать настройкам ОС:
+localStorage.removeItem('theme')
+```
 # Внешние источники
 Документация — https://tailwindcss.com/docs
 Обзор истории подходов — https://www.freecodecamp.org/news/what-is-tailwind-css-a-beginners-guide/
